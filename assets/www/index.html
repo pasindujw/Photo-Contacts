@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="jquery/jquery.mobile-1.4.3.min.css">
+<script src="cordova.js"></script>
+<script src="index.js"></script>
+<script src="jquery/jquery-1.11.1.min.js"></script>
+<script src="jquery/jquery.mobile-1.4.3.min.js"></script>
+
+
+</head>
+<body>
+ <!-- Home page -->
+	<label id="myadrs"> </label>
+   <div data-role="page" id="homePage" data-theme="b">
+  	 <div data-role="header" data-position="fixed">
+  		 <h1>Contacts View</h1>
+  	 </div>
+
+  	 <div data-role="main" class="ui-content">
+  		 <div data-role="controlgroup" data-type="vertical">
+  			 <a href="#pageOne" class="ui-btn ui-icon-grid ui-btn-icon-left"
+  				 data-transition="flow">View Contacts</a> <a href="#pageAdd"
+  				 class="ui-btn ui-icon-arrow-r ui-btn-icon-left"
+  				 data-transition="flow">Add New Contact</a>
+  		 </div>
+  	 </div>
+
+  	 <div data-role="footer" data-position="fixed">
+  		 <h1>Customize your contact list</h1>
+  	 </div>
+   </div>
+
+   <!-- Page One - view Contacts -->
+	
+   <div data-role="page" id="pageOne" data-theme="b">
+  	 <div data-role="header" data-position="fixed">
+  		 <h1>Contacts List</h1>
+  	 </div>
+
+  	 <div data-role="main" class="ui-content">
+  		 <div id="contactsList"></div>
+  	 </div>
+
+  	 <div data-role="footer" data-position="fixed">
+  		 <center>
+  			 <a href="#homePage" class="ui-btn ui-icon-home ui-btn-icon-left"
+  				 data-transition="flip">Home</a>
+  		 </center>
+  	 </div>
+   </div>
+
+
+   <!-- Page Two - Add contacts-->
+
+   <div data-role="page" id="pageAdd" data-theme="b">
+  	 <div data-role="header" data-position="fixed">
+  		 <h1>Add Contacts</h1>
+  	 </div>
+
+  	 <div data-role="main" class="ui-content">
+  		 <form method="post" action="demoform.asp">
+  			 <label for="name">Name:</label>
+  			 <input type="text" name="name" id="name">
+  			 <input type="button" onclick="takePicture();" value="Add Contact Picture" /><br/>
+  			 <label for="name">Home Phone:</label>
+  			 <input type="text" name="homePhone" id="homePhone">
+  			 <label for="name">Mobile Phone:</label>
+  			 <input type="text" name="mobilePhone" id="mobilePhone">
+  			
+  			
+  		 
+  		 <input type="button" id="btnSave" value="Save" />
+  	 </div>
+
+  	 <div data-role="footer" data-position="fixed">
+  		 <center>
+  			 <a href="#homePage" class="ui-btn ui-icon-home ui-btn-icon-left"
+  				 data-transition="turn">Back to Home</a>
+  		 </center>
+  	 </div>
+   </div>
+<script>
+	//from jquery mobile
+$(document).on("pagecreate", "#pageOne", function() {
+   createContactsList();
+
+});
+</script>
+<script>
+$(document).on("pagecreate", "#pageAdd", function() {
+   $("#btnSave").click(function() {
+  	 var name = $("#name").val();
+  	 var homePhone = $("#homePhone").val();
+  	 var mobilePhone = $("#mobilePhone").val();
+  	 var address =  document.getElementById('myadrs').innerHTML;
+	 createContact(name, homePhone, mobilePhone,address);
+   });
+   
+});
+
+function clearForm() {
+   $("#name").val('');
+   $("#homePhone").val('');
+   $("#mobilePhone").val('');
+}
+</script>	
+
+
+<script type="text/javascript" charset="utf-8" src="phonegap-1.1.0.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      
+    var deviceReady = false;
+    function takePicture() {
+          navigator.camera.getPicture(
+            function(uri) {
+               document.getElementById('myadrs').innerHTML = uri;
+            },
+            function(e) {
+                console.log("Error getting picture: " + e);
+                document.getElementById('camera_status').innerHTML = "Error getting picture.";
+            },
+            { quality: 50, destinationType: navigator.camera.DestinationType.FILE_URI});
+    };
+</script>
+
+
+</body>
+
+
+
+
+
+
+</html>
+
+
